@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | Orion Rising</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="/assets/images/favicon.ico" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+</head>
+<body class="cosmic-background">
+
+  <header class="header">
+      <nav>
+     <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+  </header>
+<canvas id="nebula"></canvas>
+<canvas id="starfield"></canvas>
+  <main class="main-content">
+  <div class="hero">
+    <img src="/assets/images/orion_logo.png" alt="Orion Rising Logo" class="logo">
+
+
+  <main class="about-main">
+    <h1>About Orion Rising</h1> <br><br>
+
+    A tech-obsessed lab where I build tools that blend utility with a pinch of personality. <p>
+
+
+✨Meet Tiberius✨ <p>
+I’m a developer with roots in hardware support and customer-facing roles. While currently in bootcamp at Hack Reactor, I've learned Python, SQL, JavaScript, React, HTML & CSS. <br>
+
+
+💻 Key Projects <p>
+
+- **AI Assistant: Answers questions with wit and accuracy. <p>
+- **DewList: A task manager built from scratch in FastAPI & React. <p> <br> <br>
+
+
+🖖 What’s Next
+I’m just getting started—let’s build something great together! [Contact Me]
+ <br>
+<script>
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+
+let stars = [];
+const numStars = 150;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+function createStars() {
+  stars = [];
+  for (let i = 0; i < numStars; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.5,
+      speed: Math.random() * 0.5 + 0.2,
+      opacity: Math.random(),
+      opacityDirection: Math.random() > 0.5 ? 1 : -1
+    });
+  }
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(star => {
+    ctx.beginPath();
+    ctx.globalAlpha = star.opacity;
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1; // reset
+}
+
+function moveStars() {
+  stars.forEach(star => {
+    star.y += star.speed;
+    star.opacity += star.opacityDirection * 0.005;
+    if (star.opacity <= 0.3 || star.opacity >= 1) {
+      star.opacityDirection *= -1; // Reverse the pulsing direction
+    }
+    if (star.y > canvas.height) {
+      star.y = 0;
+      star.x = Math.random() * canvas.width;
+    }
+  });
+}
+
+function animate() {
+  drawStars();
+  moveStars();
+  requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  createStars();
+});
+
+resizeCanvas();
+createStars();
+animate();
+</script>
+<script>
+const nebulaCanvas = document.getElementById('nebula');
+const nebulaCtx = nebulaCanvas.getContext('2d');
+
+function resizeNebula() {
+  nebulaCanvas.width = window.innerWidth;
+  nebulaCanvas.height = window.innerHeight;
+}
+
+function drawNebula() {
+  const gradient = nebulaCtx.createRadialGradient(
+    nebulaCanvas.width / 2, nebulaCanvas.height / 2, 100,
+    nebulaCanvas.width / 2, nebulaCanvas.height / 2, nebulaCanvas.width
+  );
+  gradient.addColorStop(0, 'rgba(90, 30, 180, 0.4)');
+  gradient.addColorStop(0.5, 'rgba(20, 10, 60, 0.2)');
+  gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+  nebulaCtx.fillStyle = gradient;
+  nebulaCtx.fillRect(0, 0, nebulaCanvas.width, nebulaCanvas.height);
+}
+
+function animateNebula() {
+  nebulaCtx.clearRect(0, 0, nebulaCanvas.width, nebulaCanvas.height);
+
+  // Move the gradient slowly by offsetting center
+  const time = Date.now() * 0.00005;
+  const offsetX = Math.sin(time) * 100;
+  const offsetY = Math.cos(time) * 100;
+
+  const gradient = nebulaCtx.createRadialGradient(
+    nebulaCanvas.width / 2 + offsetX, nebulaCanvas.height / 2 + offsetY, 150,
+    nebulaCanvas.width / 2, nebulaCanvas.height / 2, nebulaCanvas.width
+  );
+  gradient.addColorStop(0, 'rgba(90, 30, 180, 0.4)');
+  gradient.addColorStop(0.5, 'rgba(20, 10, 60, 0.2)');
+  gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+  nebulaCtx.fillStyle = gradient;
+  nebulaCtx.fillRect(0, 0, nebulaCanvas.width, nebulaCanvas.height);
+
+  requestAnimationFrame(animateNebula);
+}
+
+window.addEventListener('resize', resizeNebula);
+
+resizeNebula();
+animateNebula();
+</script>
+
+  </main>
+
+
+  <footer class="footer">
+   <p class="forged">Forged among the stars ✨</p>
+    <p>© 2025 Orion Rising. All rights reserved.</p>
+  </footer>
+</body>
+</html>

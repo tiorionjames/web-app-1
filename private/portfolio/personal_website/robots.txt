@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /projects.html
+Disallow: /contact.html
+Disallow: /about.html
+
+Sitemap: https://orionrising.dev/sitemap.xml
